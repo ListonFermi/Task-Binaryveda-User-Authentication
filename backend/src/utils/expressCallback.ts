@@ -24,10 +24,15 @@ export function expressCallback(controller: any) {
       }
 
       // Set the token as a cookie if it exists in the response body
-      if (httpResponse.token) {
-        res.cookie("token", httpResponse.token, {
+      if (httpResponse.accessToken) {
+        res.cookie("accessToken", httpResponse.accessToken, {
+          httpOnly: false,
+        });
+      }
+
+      if (httpResponse.refreshToken) {
+        res.cookie("refreshToken", httpResponse.refreshToken, {
           httpOnly: true,
-          path: "/",
         });
       }
 

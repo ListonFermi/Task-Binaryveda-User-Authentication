@@ -24,7 +24,7 @@ export class UserController implements IUserController {
         address,
         gender,
       });
-      const token = user.token
+      const { accessToken, refreshToken } = user;
 
       return {
         headers: {
@@ -32,7 +32,8 @@ export class UserController implements IUserController {
         },
         statusCode: 201,
         body: user,
-        token
+        accessToken,
+        refreshToken,
       };
     } catch (e: any) {
       console.log(e);
@@ -50,18 +51,19 @@ export class UserController implements IUserController {
 
   userLogin = async (httpRequest: Request): Promise<ControllerResponse> => {
     try {
-      const { email, password  } = httpRequest.body
+      const { email, password } = httpRequest.body;
 
-      const user = await this.userService.userLogin(email, password)
-      const token = user.token
-      
+      const user = await this.userService.userLogin(email, password);
+      const { accessToken, refreshToken } = user;
+
       return {
         headers: {
           "Content-Type": "application/json",
         },
         statusCode: 200,
         body: user,
-        token
+        accessToken,
+        refreshToken,
       };
     } catch (e: any) {
       console.log(e);
@@ -75,5 +77,5 @@ export class UserController implements IUserController {
         },
       };
     }
-  }
+  };
 }
