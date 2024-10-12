@@ -14,7 +14,7 @@ jobs:
 
       # Step 2: Build the Docker image
       - run: |
-          cd frontend && docker build \
+          cd backend && docker build \
           --build-arg MONGO_URI=${{ secrets.MONGO_URI }} \
           --build-arg BCRYPT_SALT=${{ secrets.BCRYPT_SALT }} \
           --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
