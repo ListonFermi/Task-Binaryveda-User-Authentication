@@ -28,8 +28,8 @@ export class UserRepository implements IUserRepository {
     } catch (error: any) {
       console.error("Error adding user:", error);
       if (error.code === 11000) {
-        const field = Object.keys(error.keyValue)[0]; // Get the field that caused the error
-        const value = error.keyValue[field]; // Get the duplicate value
+        const field = Object.keys(error.keyValue)[0]; 
+        const value = error.keyValue[field]; 
         error.message = `${field} '${value}' already exists.`;
       }
       throw new Error(error.message);

@@ -18,4 +18,5 @@ export type UserSignupOutput = {
   readonly gender?: string;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly token?: string;
 };

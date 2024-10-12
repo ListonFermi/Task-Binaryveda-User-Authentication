@@ -24,6 +24,7 @@ export class UserController implements IUserController {
         address,
         gender,
       });
+      const token = user.token
 
       return {
         headers: {
@@ -31,6 +32,7 @@ export class UserController implements IUserController {
         },
         statusCode: 201,
         body: user,
+        token
       };
     } catch (e: any) {
       console.log(e);
@@ -51,6 +53,7 @@ export class UserController implements IUserController {
       const { email, password  } = httpRequest.body
 
       const user = await this.userService.userLogin(email, password)
+      const token = user.token
       
       return {
         headers: {
@@ -58,6 +61,7 @@ export class UserController implements IUserController {
         },
         statusCode: 200,
         body: user,
+        token
       };
     } catch (e: any) {
       console.log(e);

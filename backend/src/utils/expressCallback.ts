@@ -22,6 +22,15 @@ export function expressCallback(controller: any) {
       if (httpResponse.headers) {
         res.set(httpResponse.headers);
       }
+
+      // Set the token as a cookie if it exists in the response body
+      if (httpResponse.token) {
+        res.cookie("token", httpResponse.token, {
+          httpOnly: true,
+          path: "/",
+        });
+      }
+
       res.type("json");
       res.status(httpResponse.statusCode).send(httpResponse.body);
     } catch (e: any) {

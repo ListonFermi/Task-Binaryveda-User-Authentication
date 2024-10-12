@@ -7,6 +7,7 @@ import {
 
 import { comparePassword, encryptPassword } from "../utils/encryption";
 import { AppError } from "../utils/errors";
+import { generateJWT } from "../utils/generateJWT";
 
 export class UserService implements IUserService {
   private userRepository: IUserRepository;
@@ -23,7 +24,8 @@ export class UserService implements IUserService {
         ...userData,
         password: encryptedPassword,
       });
-      return user;
+      const token = generateJWT(user._id, "user");
+      return { ...user, token };
     } catch (error: any) {
       console.log("Error in user service", error.message);
       throw new Error(error.message);
@@ -40,6 +42,8 @@ export class UserService implements IUserService {
       const isValidPassword = comparePassword(password, user.password);
       if (!isValidPassword) throw new AppError("Invalid Credentials", 401);
 
+      const token = generateJWT(user._id, "user");
+
       return {
         _id: user._id,
         username: user.username,
@@ -50,6 +54,7 @@ export class UserService implements IUserService {
         gender: user.gender,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        token,
       };
     } catch (error: any) {
       console.log("Error in user service", error.message);

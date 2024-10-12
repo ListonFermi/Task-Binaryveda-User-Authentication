@@ -1,12 +1,20 @@
 import express from "express";
 import userRouter from "./routes/userRoutes";
-import { PORT } from "./utils/constants";
+import { FRONTEND_URL, PORT } from "./utils/constants";
 import morgan from "morgan";
 import { connectDb } from "./config/database";
+import cors from "cors";
 
 const app = express();
 
-connectDb()
+connectDb();
+
+const corsOptions = {
+  origin: FRONTEND_URL() || "*", // Allow any origin if FRONTEND_URL is undefined
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(morgan("dev"));
 
