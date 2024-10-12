@@ -10,16 +10,14 @@ const app = express();
 connectDb();
 
 const corsOptions = {
-  origin: FRONTEND_URL() || "*", // Allow any origin if FRONTEND_URL is undefined
+  origin: FRONTEND_URL() || "*",
   credentials: true,
 };
 
-app.use(cors(corsOptions));
-
-app.use(morgan("dev"));
-
+app.use(cors(corsOptions)); 
+app.use(morgan("dev"));    
 app.use(express.json());
 
 app.use("/api/user/", userRouter);
 
-app.listen(PORT, () => console.log(`Server started running in port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started running on port ${PORT}`));
