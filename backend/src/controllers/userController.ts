@@ -38,11 +38,38 @@ export class UserController implements IUserController {
         headers: {
           "Content-Type": "application/json",
         },
-        statusCode: 500,
+        statusCode: e.statusCode || 500,
         body: {
           error: e.message,
         },
       };
     }
   };
+
+  userLogin = async (httpRequest: Request): Promise<ControllerResponse> => {
+    try {
+      const { email, password  } = httpRequest.body
+
+      const user = await this.userService.userLogin(email, password)
+      
+      return {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        statusCode: 200,
+        body: user,
+      };
+    } catch (e: any) {
+      console.log(e);
+      return {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        statusCode: e.statusCode || 500,
+        body: {
+          error: e.message,
+        },
+      };
+    }
+  }
 }

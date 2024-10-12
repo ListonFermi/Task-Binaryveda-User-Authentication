@@ -7,4 +7,6 @@ export interface IUserService {
    * @returns A promise that resolves to the user data upon successful signup.
    */
   userSignup(userData: UserSignupInput): Promise<UserSignupOutput>;
+
+  userLogin(email: string, password: string): Promise<UserSignupOutput>;
 }
